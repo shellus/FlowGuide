@@ -1,0 +1,20 @@
+{
+  "name": "flowguide",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "ossutil cp -rf dist oss://shellus-index/"
+  },
+  "dependencies": {
+    "vue": "^3.5.12",
+    "vue-dark-switch": "^1.0.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite": "^5.4.10"
+  }
+}
