@@ -64,7 +64,6 @@ onMounted(() => {
 }
 .lines {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: .625rem;
   margin-top: 12px;
 }
@@ -108,12 +107,14 @@ onMounted(() => {
               <h2>{{ group.title }}</h2>
             </div>
             <div class="lines">
-              <a v-for="url in group.branches" class="line" :href="url.url">
-                <div style="font-weight: bold;">🔗 {{ url.title }}</div>
+              <div v-for="url in group.branches" class="line">
+                <a :href="url.url" target="blank">
+                  🔗 {{ url.title }}
+                </a>
                 <div>status: {{url.status}}</div>
                 <div style="color: green;" v-if="url.status==='success'">{{url.responseTime}} ms</div>
                 <div style="color: red;" v-if="url.status==='failed'">{{url.error}}</div>
-              </a>
+              </div>
             </div>
         </div>
       </div>
