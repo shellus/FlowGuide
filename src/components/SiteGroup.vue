@@ -17,7 +17,7 @@ onMounted(() => {
     group.branches.forEach(url => {
       url.status = 'checking'
       url.startTime = performance.now();
-      fetch(url.url.replace(/\/$/, '') + '/stat?t=' + url.startTime).then(res => {
+      fetch(url.url.replace(/\/$/, '') + '?t=' + url.startTime).then(res => {
         if (res.status === 200) {
           url.status = 'success'
           url.endTime = performance.now();

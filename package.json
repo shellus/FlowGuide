@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "ossutil cp -rf dist oss://shellus-index/"
+    "push": "ossutil cp -rf dist oss://shellus-index/",
+    "deploy": "npm run build && npm run push"
   },
   "dependencies": {
     "vue": "^3.5.12",
