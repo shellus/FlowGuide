@@ -4,7 +4,7 @@ import {onMounted, ref} from 'vue'
 const props = defineProps(['urls'])
 
 // 创建一个响应式的 `urls` 变量，并将 `props.urls` 的数据复制到其中
-const localUrls = ref(props.urls.map(url => ({ ...url, status: 'none' })))
+const localUrls = ref(props.urls.map(url => ({...url, status: 'none'})))
 
 // 输出urls
 // console.log(JSON.stringify(props.urls))
@@ -23,12 +23,14 @@ onMounted(() => {
           url.endTime = performance.now();
           url.responseTime = Math.round(url.endTime - url.startTime)
         } else {
+          console.log(res)
           url.status = 'failed'
           url.error = res.status
         }
       }).catch((e) => {
         url.status = 'failed'
         url.error = e
+        // console.log(e.message) // Failed to fetch
       })
     })
   })
@@ -42,6 +44,7 @@ onMounted(() => {
   grid-template-columns: 1fr;
   gap: .625rem;
 }
+
 @media (min-width: 1024px) {
   .items {
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -62,6 +65,7 @@ onMounted(() => {
   background-color: var(--color-background);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .lines {
   display: grid;
   gap: .625rem;
@@ -78,6 +82,7 @@ onMounted(() => {
   padding: 6px 12px;
   background-color: hsla(0, 0%, 72%, 0.1);
 }
+
 .line:hover {
   background-color: hsla(160, 100%, 37%, 0.2);
 }
@@ -89,34 +94,52 @@ onMounted(() => {
     display: inline-block;
     margin-left: .5rem;
   }
+
   .icon {
     display: inline-block;
     transition: background-color 0.25s;
     width: 3.2em;
     vertical-align: bottom;
   }
+
+  p {
+    margin-top: 0.5rem;
+    font-size: .9rem;
+    color: #797979;
+  }
 }
 
 </style>
 <template>
-    <div class="items">
-      <div v-for="group in localUrls" class="item">
-        <div class="block">
-            <div class="title">
-              <img class="icon" :src="group.icon" />
-              <h2>{{ group.title }}</h2>
+  <div class="items">
+    <div v-for="group in localUrls" class="item">
+      <div class="block">
+        <div class="title">
+          <img class="icon" :src="group.icon"/>
+          <h2>{{ group.title }}</h2>
+          <p>{{ group.desc }}</p>
+        </div>
+        <div class="lines">
+          <div v-for="url in group.branches" class="line">
+            <div>
+              {{ url.index }}:
+              <a :href="url.url" target="blank">
+                {{ url.title }}
+              </a>
             </div>
-            <div class="lines">
-              <div v-for="url in group.branches" class="line">
-                <a :href="url.url" target="blank">
-                  🔗 {{ url.title }}
-                </a>
-                <div>status: {{url.status}}</div>
-                <div style="color: green;" v-if="url.status==='success'">{{url.responseTime}} ms</div>
-                <div style="color: red;" v-if="url.status==='failed'">{{url.error}}</div>
-              </div>
+            <div style="margin: 3px 0 5px;">
+              <span>{{ url.status }}: </span>
+              <span v-if="url.status==='success'" style="color: green;">
+                  {{ url.responseTime }}ms
+                </span>
+              <span v-if="url.status==='failed'" style="color: red;">
+                  {{ url.error }}
+                </span>
             </div>
+
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </template>

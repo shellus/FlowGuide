@@ -30,7 +30,7 @@ console.log("当前黑暗模式：" + isDark.value)
       <p>❎自动跳转：使用参数`?auto={name}`会自动选择最快的地址跳转，未知的标记不会做任何动作；你可以将其加入收藏夹以实现静默自动化选择线路</p>
     </article>
     <footer>
-      <p>本页面使用vue3构建，托管于阿里云OSS，仅作为学习调试用途。</p>
+      <p>本页面使用vue3构建，托管于阿里云OSS，仅作为学习调试用途。<a href="https://github.com/shellus/FlowGuide" target="_blank">Github地址</a> </p>
     </footer>
   </div>
 </template>
