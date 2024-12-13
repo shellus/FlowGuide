@@ -17,7 +17,7 @@ onMounted(() => {
     group.branches.forEach(url => {
       url.status = 'checking'
       url.startTime = performance.now();
-      fetch(url.url.replace(/\/$/, '') + '?t=' + url.startTime).then(res => {
+      fetch(url.check.replace(/\/$/, '') + '?t=' + url.startTime).then(res => {
         if (res.status === 200) {
           url.status = 'success'
           url.endTime = performance.now();
@@ -123,7 +123,7 @@ onMounted(() => {
           <div v-for="url in group.branches" class="line">
             <div>
               {{ url.index }}:
-              <a :href="url.url" target="blank">
+              <a :href="url.target" target="blank">
                 {{ url.title }}
               </a>
             </div>
