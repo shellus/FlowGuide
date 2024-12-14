@@ -5,7 +5,7 @@
     "desc": "bt下载面板，用于PT做种，好像没什么用处",
     "branches": [
       {"index": "SF-广东", "title" :"qb.frp.example.com", "check": "https://qb.frp.example.com:8080/stat", "target": "https://qb.frp.example.com:8080/"},
-      {"index": "SF-和圣塞", "title" :"qb.jp.example.com", "check": "https://qb.jp.example.com:8080/stat", "target": "https://qb.jp.example.com:8080/"},
+      {"index": "SF-和圣塞", "title" :"qb.us.example.com", "check": "https://qb.us.example.com:8080/stat", "target": "https://qb.us.example.com:8080/"},
       {"index": "Ch-四川", "title" :"qb.ch.example.com", "check": "https://qb.ch.example.com:8080/stat", "target": "https://qb.ch.example.com:8080/"},
       {"index": "Ch-东京", "title" :"qb.jp.example.com", "check": "https://qb.jp.example.com:8080/stat", "target": "https://qb.jp.example.com:8080/"}
     ]
@@ -16,7 +16,7 @@
     "desc": "我的网盘，并不对外公开，仅自己和朋友使用",
     "branches": [
       {"index": "SF-广东", "title" :"alist.frp.example.com", "check": "https://alist.frp.example.com:8080/ping", "target": "https://alist.frp.example.com:8080/"},
-      {"index": "SF-和圣塞", "title" :"alist.jp.example.com", "check": "https://alist.jp.example.com:8080/ping", "target": "https://alist.jp.example.com:8080/"},
+      {"index": "SF-和圣塞", "title" :"alist.us.example.com", "check": "https://alist.us.example.com:8080/ping", "target": "https://alist.us.example.com:8080/"},
       {"index": "Ch-四川", "title" :"alist.ch.example.com", "check": "https://alist.ch.example.com:8080/ping", "target": "https://alist.ch.example.com:8080/"},
       {"index": "Ch-东京", "title" :"alist.jp.example.com", "check": "https://alist.jp.example.com:8080/ping", "target": "https://alist.jp.example.com:8080/"}
     ]
