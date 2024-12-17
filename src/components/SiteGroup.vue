@@ -1,15 +1,14 @@
 <script setup>
 import {onMounted, ref} from 'vue'
+import RedirectDialog from "@/components/RedirectDialog.vue";
 
+const location = window.location
 const props = defineProps(['urls', 'redirect'])
 
 // 创建一个响应式的 `urls` 变量，并将 `props.urls` 的数据复制到其中
 const localUrls = ref(props.urls.map(url => ({...url, status: 'none'})))
 
-// 输出urls
-// console.log(JSON.stringify(props.urls))
-// example: [{"title":"qb-pb","url":"https://qb.pb.endaosi.com:8927/", "status":"none"}]
-
+const redirectDialog = ref()
 
 onMounted(() => {
   // 开始请求url的/stat路径，并修改状态为checking，然后在得到200或者请求失败后改为failed
@@ -22,10 +21,6 @@ onMounted(() => {
           url.status = 'success'
           url.endTime = performance.now();
           url.responseTime = Math.round(url.endTime - url.startTime)
-          // 判断如果有redirect参数，就跳转到第一个成功的url
-          if (props.redirect && props.redirect === group.title) {
-            location.href = url.target
-          }
         } else {
           console.log(res)
           url.status = 'failed'
@@ -38,7 +33,42 @@ onMounted(() => {
       })
     })
   })
+  // 1秒后调用startAutoRedirect
+  setTimeout(startAutoRedirect, 1000)
 })
+
+const startAutoRedirect = () => {
+  // 如果有redirect参数，就跳转到responseTime最小的url（不为0）
+  if (props.redirect) {
+    const successUrls = localUrls.value
+        .filter(group => group.title === props.redirect)
+        .map(group => group.branches)
+        .flat()
+        .filter(url => url.status === 'success' && url.responseTime > 0)
+    if (successUrls.length > 0) {
+      const minTimeUrl = successUrls.reduce((prev, curr) => prev.responseTime < curr.responseTime ? prev : curr)
+      // location.href = minTimeUrl.target
+      // 3秒后跳转
+      // setTimeout(() => {
+      //   location.href = minTimeUrl.target
+      // }, 3000)
+      // 3秒后跳转，使用RedirectDialog
+      redirectDialog.value.open(minTimeUrl.target)
+    }
+  }
+}
+
+const handleCancel = () => {
+  const newUrl = new URL(location.href)
+  newUrl.searchParams.delete('r')
+  location.href = newUrl.toString()
+}
+
+const enableAutoRedirect = (groupTitle) => {
+  const newUrl = new URL(location.href)
+  newUrl.searchParams.set('r', groupTitle)
+  location.href = newUrl.toString()
+}
 </script>
 <style scoped>
 
@@ -115,6 +145,7 @@ onMounted(() => {
 
 </style>
 <template>
+  <RedirectDialog ref="redirectDialog" @cancel="handleCancel"></RedirectDialog>
   <div class="items">
     <div v-for="group in localUrls" class="item">
       <div class="block">
@@ -122,6 +153,7 @@ onMounted(() => {
           <img class="icon" :src="group.icon"/>
           <h2>{{ group.title }}</h2>
           <p>{{ group.desc }}</p>
+          <p><a :href="`${location.href}?r=${group.title}`" class="link-style">自动跳转</a></p>
         </div>
         <div class="lines">
           <div v-for="url in group.branches" class="line">
