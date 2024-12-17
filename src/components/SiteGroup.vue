@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 
-const props = defineProps(['urls'])
+const props = defineProps(['urls', 'redirect'])
 
 // 创建一个响应式的 `urls` 变量，并将 `props.urls` 的数据复制到其中
 const localUrls = ref(props.urls.map(url => ({...url, status: 'none'})))
@@ -22,6 +22,10 @@ onMounted(() => {
           url.status = 'success'
           url.endTime = performance.now();
           url.responseTime = Math.round(url.endTime - url.startTime)
+          // 判断如果有redirect参数，就跳转到第一个成功的url
+          if (props.redirect && props.redirect === group.title) {
+            location.href = url.target
+          }
         } else {
           console.log(res)
           url.status = 'failed'
