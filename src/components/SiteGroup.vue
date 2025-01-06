@@ -16,8 +16,16 @@ onMounted(() => {
     group.branches.forEach(url => {
       url.status = 'checking'
       url.startTime = performance.now();
-      fetch(url.check.replace(/\/$/, '') + '?t=' + url.startTime).then(res => {
-        if (res.status === 200) {
+      // 如果存在opaque且为true，那么fetchOptions:mode: 'no-cors'
+      // 用于无法更改目标地址跨域请求头的情况
+      let fetchOptions = {}
+      if (url.hasOwnProperty("opaque") && url.opaque) {
+        fetchOptions = {
+          mode: 'no-cors'
+        }
+      }
+      fetch(url.check.replace(/\/$/, '') + '?t=' + url.startTime, fetchOptions).then(res => {
+        if (res.status === 200 || res.status === 0) {
           url.status = 'success'
           url.endTime = performance.now();
           url.responseTime = Math.round(url.endTime - url.startTime)
