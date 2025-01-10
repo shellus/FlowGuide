@@ -18,9 +18,9 @@ const redirect = new URLSearchParams(location.search).get('r') || ''
     <article style="margin-top: 20px;">
       <h2>地址类型和优先级</h2>
       <ul>
-        <li>1. private 私有网络优先，安全，速度快</li>
-        <li>2. public 公网端口映射，20Mb/s，免费流量</li>
-        <li>3. frp 24Mb/s，收费流量</li>
+        <li>1. SF：www.natfrp.com，青铜VIP，24 Mbps</li>
+        <li>2. Ch：panel.chmlfrp.cn，永久VIP，32 Mbps</li>
+        <li>3. Ci：chickfrp.com，免费用户，流量5GB/月，10Mbps</li>
       </ul>
     </article>
     <article style="margin-top: 20px;">
